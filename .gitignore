@@ -74,6 +74,7 @@ cmake-build-*
 
 # Config files
 *.conf
+*.pc
 
 # Clangd cache index
 .cache
