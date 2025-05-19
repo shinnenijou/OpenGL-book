@@ -30,18 +30,23 @@ auto Utils::CreateShaderProgram(const path& vShader, const path& fShader) -> GLu
     const auto fshaderStr = ReadShaderSource(fShader);
     const auto fshaderSource = fshaderStr.c_str();
 
-    const GLuint vShaderD = GLCall(glCreateShader(GL_VERTEX_SHADER));
-    const GLuint fShaderD = GLCall(glCreateShader(GL_FRAGMENT_SHADER));
+    const GLuint vShaderD =glCreateShader(GL_VERTEX_SHADER);
+    const GLuint fShaderD =glCreateShader(GL_FRAGMENT_SHADER);
 
-    GLCall(glShaderSource(vShaderD, 1, &vshaderSource, nullptr));
+    glShaderSource(vShaderD, 1, &vshaderSource, nullptr);
     glShaderSource(fShaderD, 1, &fshaderSource, nullptr);
     glCompileShader(vShaderD);
+    printShaderLog(vShaderD);
     glCompileShader(fShaderD);
+    printShaderLog(fShaderD);
 
     const GLuint vfProgram = glCreateProgram();
     glAttachShader(vfProgram, vShaderD);
+    printProgramLog(vfProgram);
     glAttachShader(vfProgram, fShaderD);
+    printProgramLog(vfProgram);
     glLinkProgram(vfProgram);
+    printProgramLog(vfProgram);
 
     return vfProgram;
 }
