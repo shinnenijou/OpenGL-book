@@ -10,10 +10,11 @@ void WindowOnePoint::Init()
     glBindVertexArray(vao[0]);
 }
 
-void WindowOnePoint::Display(double current_time)
+void WindowOnePoint::Display(const double current_time)
 {
     glUseProgram(rendering_program_);
-    glPointSize(30.0f);
+    const auto factor = static_cast<float>(glm::abs(glm::sin(current_time)));
+    glPointSize(30.0f * factor);
     glDrawArrays(GL_POINTS, 0, 1);
 }
 

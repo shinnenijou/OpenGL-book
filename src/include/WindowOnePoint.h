@@ -3,6 +3,10 @@
 
 #include "WindowBase.h"
 
+/**
+ * @brief Chapter 2 - Program 2.2
+ *
+ */
 class WindowOnePoint : public WindowBase {
     constexpr static int NUM_VAOS = 1;
 public:
