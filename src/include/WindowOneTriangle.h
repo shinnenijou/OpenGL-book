@@ -9,6 +9,7 @@
 
 class WindowOneTriangle : public WindowBase {
     constexpr static int NUM_VAOS = 1;
+    constexpr static float SPEED = 1.0f;
 public:
     WindowOneTriangle(int width, int height, std::string title): WindowBase(width, height, std::move(title)) {}
     void Init() override;
@@ -17,7 +18,8 @@ private:
     GLuint rendering_program_ {};
     GLuint vao_[NUM_VAOS] {};
     float x_ {};
-    float inc_ {0.01f};
+    float direction_ {1.0f}; // per second
+    double last_time_ {};
 };
 
 
