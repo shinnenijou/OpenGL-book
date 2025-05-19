@@ -5,8 +5,7 @@
 #ifndef RUNNER_HPP
 #define RUNNER_HPP
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "opengl.h"
 
 #include <cstdlib>
 #include <iostream>

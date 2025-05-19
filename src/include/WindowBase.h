@@ -1,15 +1,17 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "opengl.h"
+#include "macros.h"
 
 #include <memory>
 #include <functional>
 #include <string>
 
-#include "macros.h"
 
+/**
+ * @brief Chapter 2 - program 1
+ */
 class WindowBase {
 public:
     WindowBase(int width, int height, std::string title);
