@@ -10,8 +10,6 @@ public:
     void Init() override;
     void Display(double current_time) override;
 private:
-    GLuint CreateShaderProgram();
-private:
     GLuint rendering_program_ {};
     GLuint vao[NUM_VAOS] {};
 };
