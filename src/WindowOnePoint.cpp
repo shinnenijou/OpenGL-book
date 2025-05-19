@@ -12,6 +12,7 @@ void WindowOnePoint::Init()
 
 void WindowOnePoint::Display(const double current_time)
 {
+    glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(rendering_program_);
     const auto factor = static_cast<float>(glm::abs(glm::sin(current_time)));
     glPointSize(30.0f * factor);
