@@ -1,4 +1,4 @@
-#include "window.h"
+#include "WindowBase.h"
 
 WindowBase::WindowBase(const int width, const int height, std::string title):width_(width),height_(height),title_(std::move(title)) {
     window_ = glfwCreateWindow(width_, height_, title_.c_str(), nullptr, nullptr);
