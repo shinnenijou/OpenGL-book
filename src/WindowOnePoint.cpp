@@ -1,4 +1,5 @@
 #include "WindowOnePoint.h"
+#include "debug.h"
 
 void WindowOnePoint::Init()
 {
@@ -30,10 +31,10 @@ GLuint WindowOnePoint::CreateShaderProgram()
         "  else color = vec4(0.0, 0.0, 1.0, 1.0); "
         "}";
 
-    const GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
-    const GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
+    const GLuint vShader = GLCall(glCreateShader(GL_VERTEX_SHADER));
+    const GLuint fShader = GLCall(glCreateShader(GL_FRAGMENT_SHADER));
 
-    glShaderSource(vShader, 1, &vshaderSource, nullptr);
+    GLCall(glShaderSource(vShader, 1, &vshaderSource, nullptr));
     glShaderSource(fShader, 1, &fshaderSource, nullptr);
     glCompileShader(vShader);
     glCompileShader(fShader);
