@@ -16,6 +16,8 @@ public:
 private:
     GLuint rendering_program_ {};
     GLuint vao_[NUM_VAOS] {};
+    float x_ {};
+    float inc_ {0.01f};
 };
 
 
