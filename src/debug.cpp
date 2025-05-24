@@ -12,7 +12,7 @@ void printShaderLog(GLuint shader)
         const auto log = new char[len];
         glGetShaderInfoLog(shader, len, &wn, log);
         std::cout << "Shader Info Log: " << log << std::endl;
-        delete log;
+        delete[] log;
     }
 }
 
@@ -26,7 +26,7 @@ void printProgramLog(GLuint program)
         const auto log = new char[len];
         glGetProgramInfoLog(program, len, &wn, log);
         std::cout << "Shader Info Log: " << log << std::endl;
-        delete log;
+        delete[] log;
     }
 }
 
