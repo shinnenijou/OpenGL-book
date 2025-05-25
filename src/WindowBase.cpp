@@ -1,5 +1,7 @@
 #include "WindowBase.h"
 
+#include <iostream>
+
 WindowBase::WindowBase(const int width, const int height, std::string title):width_(width),height_(height),title_(std::move(title)) {
     window_ = glfwCreateWindow(width_, height_, title_.c_str(), nullptr, nullptr);
 
@@ -32,7 +34,17 @@ void WindowBase::Display(double current_time) {
 }
 
 void WindowBase::Update() {
-    Display(glfwGetTime());
+    const auto current_time = glfwGetTime();
+    ++frame_;
+
+    if (current_time - last_time_ > 5)
+    {
+        std::cout << "Current frame rate: " << frame_ / 5 << std::endl;
+        last_time_ = current_time;
+        frame_ = 0;
+    }
+
+    Display(current_time);
     glfwSwapBuffers(window_);
     glfwPollEvents();
 }

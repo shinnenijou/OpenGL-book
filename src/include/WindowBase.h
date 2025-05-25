@@ -26,6 +26,8 @@ public:
     bool IsClosed() const;
 
 protected:
+    double last_time_ {};
+    int frame_ {};
     int width_ {};
     int height_ {};
     int real_width_ {};
