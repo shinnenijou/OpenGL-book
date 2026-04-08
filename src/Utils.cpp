@@ -36,17 +36,17 @@ auto Utils::CreateShaderProgram(const path& vShader, const path& fShader) -> GLu
     glShaderSource(vShaderD, 1, &vshaderSource, nullptr);
     glShaderSource(fShaderD, 1, &fshaderSource, nullptr);
     glCompileShader(vShaderD);
-    printShaderLog(vShaderD);
+    SHADER_LOG(vShaderD);
     glCompileShader(fShaderD);
-    printShaderLog(fShaderD);
+    SHADER_LOG(fShaderD);
 
     const GLuint vfProgram = glCreateProgram();
     glAttachShader(vfProgram, vShaderD);
-    printProgramLog(vfProgram);
+    PROGRAM_LOG(vfProgram);
     glAttachShader(vfProgram, fShaderD);
-    printProgramLog(vfProgram);
+    PROGRAM_LOG(vfProgram);
     glLinkProgram(vfProgram);
-    printProgramLog(vfProgram);
+    PROGRAM_LOG(vfProgram);
 
     return vfProgram;
 }
