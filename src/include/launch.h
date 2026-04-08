@@ -35,6 +35,8 @@ int run(){
 
         window.Init();
 
+        LOG_INFO("window inited");
+
         while (!window.IsClosed()) {
             window.Update();
         }

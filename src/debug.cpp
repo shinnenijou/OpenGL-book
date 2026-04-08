@@ -11,6 +11,7 @@
 #include <ctime>
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 
 // =============================================================================
 // Logger Implementation
@@ -29,6 +30,7 @@ public:
     Logger() : running_(true), thread_(&Logger::WorkerThread, this) {}
 
     ~Logger() {
+        Log(LogLevel::INFO, __FUNCTION__, __LINE__, "logger shutdown", {});
         Shutdown();
     }
 
