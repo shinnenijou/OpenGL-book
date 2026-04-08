@@ -120,31 +120,12 @@ private:
     std::thread thread_;
 };
 
-// Global logger instance
-static Logger* g_logger = nullptr;
-
-void LoggerInit() {
-    if (!g_logger) {
-        g_logger = new Logger();
-    }
-}
-
-void LoggerShutdown() {
-    if (g_logger) {
-        g_logger->Shutdown();
-        delete g_logger;
-        g_logger = nullptr;
-    }
-}
 
 void LogMessage(LogLevel level, const char* func, int line, const char* fmt, ...) {
-    if (!g_logger) {
-        LoggerInit();  // Auto-initialize if not done
-    }
-
+    static Logger logger{};
     va_list args;
     va_start(args, fmt);
-    g_logger->Log(level, func, line, fmt, args);
+    logger.Log(level, func, line, fmt, args);
     va_end(args);
 }
 

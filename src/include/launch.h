@@ -13,10 +13,7 @@
 
 template <typename Window>
 int run(){
-    LoggerInit();
-
     if (!glfwInit()) {
-        LoggerShutdown();
         return EXIT_FAILURE;
     }
 
@@ -32,7 +29,6 @@ int run(){
         glewExperimental = GL_TRUE;
 
         if (glewInit() != GLEW_OK) {
-            LoggerShutdown();
             return EXIT_FAILURE;
         }
         glfwSwapInterval(1);
@@ -45,7 +41,6 @@ int run(){
     }
 
     glfwTerminate();
-    LoggerShutdown();
 
     return EXIT_SUCCESS;
 }
