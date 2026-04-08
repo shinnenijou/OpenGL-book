@@ -6,13 +6,19 @@
 #define RUNNER_HPP
 
 #include "opengl.h"
+#include "debug.h"
 
 #include <cstdlib>
 #include <iostream>
 
 template <typename Window>
 int run(){
-    if (!glfwInit()) { return EXIT_FAILURE; }
+    LoggerInit();
+
+    if (!glfwInit()) {
+        LoggerShutdown();
+        return EXIT_FAILURE;
+    }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
@@ -25,7 +31,10 @@ int run(){
         // WTF?
         glewExperimental = GL_TRUE;
 
-        if (glewInit() != GLEW_OK) { return EXIT_FAILURE; }
+        if (glewInit() != GLEW_OK) {
+            LoggerShutdown();
+            return EXIT_FAILURE;
+        }
         glfwSwapInterval(1);
 
         window.Init();
@@ -36,6 +45,7 @@ int run(){
     }
 
     glfwTerminate();
+    LoggerShutdown();
 
     return EXIT_SUCCESS;
 }
