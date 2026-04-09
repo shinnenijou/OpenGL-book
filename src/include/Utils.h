@@ -11,9 +11,9 @@
 
 struct Utils {
     using path = std::filesystem::path;
-    static const std::filesystem::path PROJ_ROOT;
     static auto ReadShaderSource(const path& path) -> std::string;
     static auto CreateShaderProgram(const path& vShader, const path &fShader) -> GLuint;
+    static auto GetExecutablePath() -> path;
 };
 
 

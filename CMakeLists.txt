@@ -38,8 +38,21 @@ INCLUDE_DIRECTORIES(src/include)
 AUX_SOURCE_DIRECTORY(src SRC_LIST)
 
 # #########################################################
+# Platform-specific sources
+# #########################################################
+SET(PLATFORM_SRC "")
+
+IF(APPLE)
+    LIST(APPEND PLATFORM_SRC src/platform/Utils_macos.cpp)
+ELSEIF(WIN32)
+    LIST(APPEND PLATFORM_SRC src/platform/Utils_windows.cpp)
+ELSEIF(UNIX)
+    LIST(APPEND PLATFORM_SRC src/platform/Utils_linux.cpp)
+ENDIF()
+
+# #########################################################
 # TARGET: APP
 # #########################################################
-ADD_EXECUTABLE(app ${SRC_LIST})
+ADD_EXECUTABLE(app ${SRC_LIST} ${PLATFORM_SRC})
 TARGET_LINK_LIBRARIES(app glfw glew)
 

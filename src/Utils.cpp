@@ -4,6 +4,7 @@
 
 #include "Utils.h"
 #include "debug.h"
+#include "platform/Utils_platform.h"
 
 #include <fstream>
 #include <sstream>
@@ -11,12 +12,11 @@
 
 using namespace std;
 
-const filesystem::path Utils::PROJ_ROOT {"./"};
-
-auto Utils::ReadShaderSource(const std::filesystem::path& path) -> string
+auto Utils::ReadShaderSource(const path& relativePath) -> string
 {
+    static path base = GetExecutablePath().parent_path().parent_path();
     string content;
-    ifstream fs(PROJ_ROOT / path, ios::in);
+    ifstream fs(base / relativePath, ios::in);
     char ch;
     while (fs.get(ch))
         content.push_back(ch);
@@ -49,4 +49,9 @@ auto Utils::CreateShaderProgram(const path& vShader, const path& fShader) -> GLu
     PROGRAM_LOG(vfProgram);
 
     return vfProgram;
+}
+
+auto Utils::GetExecutablePath() -> path {
+    static path exePath = GetExecutablePathImpl();
+    return exePath;
 }
