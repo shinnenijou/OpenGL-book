@@ -17,7 +17,7 @@ cmake --build build
 ./build/app
 ```
 
-The project uses CMake 3.4+ and requires C++17. All dependencies (GLFW, GLEW, GLM) are bundled in `third-party/`.
+Requirements: CMake 3.4+, C++17, OpenGL 4.1. All dependencies (GLFW 3.4, GLEW 2.1.0, GLM) are bundled in `third-party/`.
 
 ## Architecture
 
@@ -32,9 +32,12 @@ The project uses CMake 3.4+ and requires C++17. All dependencies (GLFW, GLEW, GL
 - `src/include/launch.h` - `run<Window>()` template that initializes GLFW/GLEW and runs the main loop
 - `src/include/opengl.h` - Single include for all OpenGL headers (GLEW, GLFW, GLM)
 - `src/include/Utils.h` - Shader loading utilities (`CreateShaderProgram`, `ReadShaderSource`)
-- `src/include/debug.h` - OpenGL error checking macros (`GLCall`, `SHADER_LOG`, `PROGRAM_LOG`)
+- `src/include/debug.h` - Thread-safe async logging (`LOG_INFO`, `LOG_WARN`, `LOG_ERROR`) and OpenGL error checking (`GLCall`, `SHADER_LOG`, `PROGRAM_LOG`)
+- `src/platform/Utils_platform.h` - Platform-specific executable path resolution
 
 **Shaders:** Located in `res/shader/`, named by chapter/program (e.g., `vertShader-4.5.glsl`)
+
+**Platform Support:** Cross-platform (macOS, Windows, Linux) with platform-specific implementations in `src/platform/Utils_*.cpp`
 
 ## Adding a New Example
 
