@@ -42,3 +42,8 @@ The project uses CMake 3.4+ and requires C++17. All dependencies (GLFW, GLEW, GL
 2. Create corresponding `.cpp` in `src/`
 3. Add shaders to `res/shader/` if needed
 4. Update `src/app.cpp` to use the new window class
+
+## Workflow Rules
+
+1. **Commit immediately**: After completing any modifications, commit the changes with git immediately
+2. **Build verification only**: This is a graphics program. Verify by compiling (`cmake --build build`), but do not run the application for verification
