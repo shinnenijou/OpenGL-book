@@ -6,7 +6,7 @@
 #include "Utils_platform.h"
 #include <windows.h>
 
-std::filesystem::path GetExecutablePathImpl() {
+std::filesystem::path GetExecutablePath() {
     char buf[MAX_PATH];
     DWORD len = GetModuleFileNameA(NULL, buf, MAX_PATH);
     if (len > 0) {

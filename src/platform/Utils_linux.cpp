@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <limits.h>
 
-std::filesystem::path GetExecutablePathImpl() {
+std::filesystem::path GetExecutablePath() {
     char buf[PATH_MAX];
     ssize_t len = readlink("/proc/self/exe", buf, sizeof(buf) - 1);
     if (len != -1) {

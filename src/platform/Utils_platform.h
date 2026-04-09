@@ -11,6 +11,6 @@
 // Platform-specific implementation of GetExecutablePath
 // Each platform file (Utils_macos.cpp, Utils_windows.cpp, Utils_linux.cpp)
 // must provide this function.
-std::filesystem::path GetExecutablePathImpl();
+std::filesystem::path GetExecutablePath();
 
 #endif //UTILS_PLATFORM_H

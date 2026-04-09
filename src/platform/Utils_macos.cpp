@@ -7,7 +7,7 @@
 #include <mach-o/dyld.h>
 #include <cstring>
 
-std::filesystem::path GetExecutablePathImpl() {
+std::filesystem::path GetExecutablePath() {
     char buf[1024];
     uint32_t size = sizeof(buf);
     if (_NSGetExecutablePath(buf, &size) == 0) {

@@ -50,8 +50,3 @@ auto Utils::CreateShaderProgram(const path& vShader, const path& fShader) -> GLu
 
     return vfProgram;
 }
-
-auto Utils::GetExecutablePath() -> path {
-    static path exePath = GetExecutablePathImpl();
-    return exePath;
-}
