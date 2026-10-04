@@ -1,4 +1,5 @@
 #include "WindowBase.h"
+#include "debug.h"
 
 #include <iostream>
 
@@ -39,7 +40,7 @@ void WindowBase::Update() {
 
     if (current_time - last_time_ > 5)
     {
-        std::cout << "Current frame rate: " << frame_ / 5 << std::endl;
+        LOG_INFO("Current frame rate: %d", frame_ / 5);
         last_time_ = current_time;
         frame_ = 0;
     }

@@ -1,10 +1,7 @@
 #include "launch.h"
-#include "WindowBase.h"
-#include "WindowOnePoint.h"
-#include "WindowOneTriangle.h"
-#include "WindowOneCube.h"
+#include "WindowManyCubes.h"
 
 int main()
 {
-    return run<WindowOneCube>();
+    return run<WindowManyCubes>();
 }
