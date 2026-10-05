@@ -1,18 +1,15 @@
-//
-// Created by YuxinLiu on 2025/5/19.
-//
-
 #ifndef RUNNER_HPP
 #define RUNNER_HPP
 
 #include "opengl.h"
 #include "debug.h"
+#include "Utils.h"
 
 #include <cstdlib>
 #include <iostream>
 
 template <typename Window>
-int run(){
+int run(int width, int height, const std::string& title){
     if (!glfwInit()) {
         return EXIT_FAILURE;
     }
@@ -23,7 +20,7 @@ int run(){
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     {
-        Window window(300, 300, "Chapter-2");
+        Window window(width, height, title);
 
         // WTF?
         glewExperimental = GL_TRUE;

@@ -3,5 +3,5 @@
 
 int main()
 {
-    return run<WindowMatrixStack>();
+    return run<WindowMatrixStack>(300, 300, "Chapter-2");
 }

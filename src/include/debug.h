@@ -1,7 +1,3 @@
-//
-// Created by YuxinLiu on 2025/5/19.
-//
-
 #ifndef DEBUG_H
 #define DEBUG_H
 
