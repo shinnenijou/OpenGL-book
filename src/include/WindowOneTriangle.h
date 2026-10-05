@@ -1,7 +1,3 @@
-//
-// Created by YuxinLiu on 2025/5/20.
-//
-
 #ifndef WINDOWONETRIANGLE_H
 #define WINDOWONETRIANGLE_H
 

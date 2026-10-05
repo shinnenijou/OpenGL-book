@@ -1,7 +1,7 @@
 #include "launch.h"
-#include "WindowCubeAndPyramid.h"
+#include "WindowMatrixStack.h"
 
 int main()
 {
-    return run<WindowCubeAndPyramid>();
+    return run<WindowMatrixStack>();
 }
