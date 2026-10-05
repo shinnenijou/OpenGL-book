@@ -1,7 +1,7 @@
 #include "launch.h"
-#include "WindowManyCubes.h"
+#include "WindowCubeAndPyramid.h"
 
 int main()
 {
-    return run<WindowManyCubes>();
+    return run<WindowCubeAndPyramid>();
 }
