@@ -48,8 +48,18 @@ void WindowMatrixStack::Display(const double current_time)
 
     std::stack<glm::mat4> mvStack{};
 
+    // option 1. constant view
+    // auto vMat = translate(glm::mat4(1.0f), - camara_);
+
+    // option 2. loot at the sun
+    // auto vMat = glm::lookAt(camara_, sun_loc_, glm::vec3(0,1,0));
+
+    // option 3. look at the earch
+    auto posEarth = glm::vec3(sin(tf) * 4, 0.0, cos(tf) *4);
+    auto vMat = glm::lookAt(glm::vec3(0.0f, 16.0f, 0.0f), posEarth, glm::vec3(0,0,1));
+
     // 入栈视图矩阵
-    mvStack.push(translate(glm::mat4(1.0f), - camara_));            // 此时栈顶: 视图
+    mvStack.push(vMat);                                                   // 此时栈顶: 视图
 
     // =============== 四棱锥 / 太阳 ===============
     mvStack.push(mvStack.top());                                        // 此时栈顶:  太阳位置
