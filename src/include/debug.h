@@ -50,4 +50,13 @@ if (checkOpenGLError()) exit(1)
 #define SHADER_LOG(shader) printShaderLog((shader), __FUNCTION__, __LINE__)
 #define PROGRAM_LOG(program) printProgramLog((program), __FUNCTION__, __LINE__)
 
+
+#define CHECK_ARRAY_INDEX_NORET(arr, index)               \
+    if (index >= sizeof(arr) / sizeof(arr[0]))          \
+    {                                                   \
+        LOG_ERROR("out of range: index = %d", index);   \
+        return;                                         \
+    }
+
+
 #endif //DEBUG_H

@@ -5,10 +5,11 @@
 
 class WindowMatrixStack : public WindowBase {
     constexpr static size_t VAO_NUM = 1;
-    constexpr static size_t VBO_NUM = 2;
+    constexpr static size_t VBO_NUM = 3;
     constexpr static size_t VBO_INDEX_SUN = 0;
     constexpr static size_t VBO_INDEX_EARTH = 1;
     constexpr static size_t VBO_INDEX_MOON = 1;    // 和地球共用同一组顶点
+    constexpr static size_t VBO_INDEX_JUPITER = 2;
     constexpr static float FOVY = 1.0472f; // 1.0472 radians = 60 degrees
 public:
     WindowMatrixStack(const int width, const int height, std::string title): WindowBase(width, height, std::move(title)) {}
@@ -17,6 +18,7 @@ public:
 private:
     void SetupCubeVertices(size_t index);
     void SetupPyramidVertices(size_t index);
+    void SetupTetrahedron(size_t index);
 
 private:
     GLuint vao_[VAO_NUM];

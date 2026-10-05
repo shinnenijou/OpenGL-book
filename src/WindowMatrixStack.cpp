@@ -4,6 +4,7 @@
 #include "WindowMatrixStack.h"
 
 #include <stack>
+#include <cmath>
 
 
 void WindowMatrixStack::Init()
@@ -23,6 +24,7 @@ void WindowMatrixStack::Init()
 
     SetupPyramidVertices(VBO_INDEX_SUN);
     SetupCubeVertices(VBO_INDEX_EARTH);
+    SetupTetrahedron(VBO_INDEX_JUPITER);
 }
 
 void WindowMatrixStack::Display(const double current_time)
@@ -89,10 +91,24 @@ void WindowMatrixStack::Display(const double current_time)
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LEQUAL);
     glDrawArrays(GL_TRIANGLES, 0, 36);
+    mvStack.pop();                                                          // 此时栈顶: 地球位置(含公转)
+
+    // =============== 正四边形 / 木星 ===============
+    mvStack.pop();                                                          // 此时栈顶: 太阳位置
+    mvStack.push(mvStack.top());                                          // 此时栈顶: 木星位置(含公转)
+    mvStack.top() *= glm::translate(glm::mat4(1.0f), glm::vec3(sin(tf * 0.2) * 12, 0.0, cos(tf * 0.2) * 12));
+    glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvStack.top()));
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_[VBO_INDEX_JUPITER]);
+    glVertexAttribPointer(positionLoc, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    glEnableVertexAttribArray(positionLoc);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LEQUAL);
+    glDrawArrays(GL_TRIANGLES, 0, 12);
 }
 
 void WindowMatrixStack::SetupCubeVertices(size_t index)
 {
+    CHECK_ARRAY_INDEX_NORET(vbo_, index);
     constexpr float vertex_positions[] = {
        -1.0f,  1.0f, -1.0f, -1.0f, -1.0f, -1.0f,  1.0f, -1.0f, -1.0f,
         1.0f, -1.0f, -1.0f,  1.0f,  1.0f, -1.0f, -1.0f,  1.0f, -1.0f,
@@ -114,6 +130,7 @@ void WindowMatrixStack::SetupCubeVertices(size_t index)
 }
 
 void WindowMatrixStack::SetupPyramidVertices(size_t index) {
+    CHECK_ARRAY_INDEX_NORET(vbo_, index);
     constexpr float vertex_positions[] = {
         -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f, // 前面
         1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // 右面
@@ -121,6 +138,21 @@ void WindowMatrixStack::SetupPyramidVertices(size_t index) {
         -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f, // 左面
         -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, // 底面左前
         1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f // 底面右后
+    };
+
+    // bind vertex postions to the second vbo
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_[index]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_positions), vertex_positions, GL_STATIC_DRAW);
+}
+
+void WindowMatrixStack::SetupTetrahedron(size_t index) {
+    CHECK_ARRAY_INDEX_NORET(vbo_, index);
+
+    constexpr float vertex_positions[] = {
+        0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0,
+        0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0,
+        0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0,
+        1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0,
     };
 
     // bind vertex postions to the second vbo
