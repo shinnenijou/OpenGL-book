@@ -28,6 +28,12 @@ INCLUDE_DIRECTORIES(third-party/glew-2.1.0/include)
 INCLUDE_DIRECTORIES(third-party/glm)
 
 # #########################################################
+# SOIL2
+# #########################################################
+ADD_SUBDIRECTORY(third-party/SOIL2)
+INCLUDE_DIRECTORIES(third-party/SOIL2/src/SOIL2)
+
+# #########################################################
 # Include
 # #########################################################
 INCLUDE_DIRECTORIES(src/include)
@@ -54,5 +60,5 @@ ENDIF()
 # TARGET: APP
 # #########################################################
 ADD_EXECUTABLE(app ${SRC_LIST} ${PLATFORM_SRC})
-TARGET_LINK_LIBRARIES(app glfw glew)
+TARGET_LINK_LIBRARIES(app glfw glew soil2)
 
