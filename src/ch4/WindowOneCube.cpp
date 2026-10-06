@@ -57,7 +57,7 @@ void WindowOneCube::Display(const double current_time)
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
 
     // bind vbo to vertex attribute in shaders
-    constexpr int location = 0;
+    int location = 0;
     glBindBuffer(GL_ARRAY_BUFFER, vbo_[0]);
     glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     glEnableVertexAttribArray(location);

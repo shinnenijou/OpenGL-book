@@ -1,7 +1,7 @@
 #include "launch.h"
-#include "WindowCubeAndPyramid.h"
+#include "WindowTexture.h"
 
 int main()
 {
-    return run<WindowCubeAndPyramid>(300, 300, "Chapter-2");
+    return run<WindowTexture>(300, 300, "Chapter-5");
 }
