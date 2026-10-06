@@ -1,7 +1,7 @@
 #include "launch.h"
-#include "WindowAnisotropy.h"
+#include "WindowSolarSystem.h"
 
 int main()
 {
-    return run<WindowAnisotropy>(300, 300, "Chapter-5");
+    return run<WindowSolarSystem>(300, 300, "Chapter-5");
 }

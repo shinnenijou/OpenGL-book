@@ -1,13 +1,13 @@
 #include "opengl.h"
 #include "Utils.h"
 #include "debug.h"
-#include "WindowMatrixStack.h"
+#include "WindowSolarSystem.h"
 
 #include <stack>
 #include <cmath>
 
 
-void WindowMatrixStack::Init()
+void WindowSolarSystem::Init()
 {
     WindowBase::Init();
     rendering_program_ = Utils::CreateShaderProgram("res/shader/vertShader-4.5.glsl", "res/shader/fragShader-4.5.glsl");
@@ -27,7 +27,7 @@ void WindowMatrixStack::Init()
     SetupVertices(VERTICES_TETRAHEDRON_DEF, sizeof(VERTICES_TETRAHEDRON_DEF), VBO_INDEX_JUPITER);
 }
 
-void WindowMatrixStack::Display(const double current_time)
+void WindowSolarSystem::Display(const double current_time)
 {
     glClear(GL_DEPTH_BUFFER_BIT);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -116,7 +116,7 @@ void WindowMatrixStack::Display(const double current_time)
     glDrawArrays(GL_TRIANGLES, 0, 12);
 }
 
-void WindowMatrixStack::SetupVertices(const float points[], int size, int index) {
+void WindowSolarSystem::SetupVertices(const float points[], int size, int index) {
     CHECK_ARRAY_INDEX_NORET(vbo_, index);
     glBindBuffer(GL_ARRAY_BUFFER, vbo_[index]);
     glBufferData(GL_ARRAY_BUFFER, size, points, GL_STATIC_DRAW);
