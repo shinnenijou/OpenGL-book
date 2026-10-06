@@ -71,6 +71,21 @@ auto Utils::loadTexture(const path& texImagePath) -> GLuint {
     if (textureID == 0)
     {
         LOG_ERROR("could not find texture file: %s", texImagePath.c_str());
+        return 0;
+    }
+
+    // MIPMAP(多级渐进纹理)
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    // 各向异性过滤
+    if (glewIsSupported("GL_EXT_texture_filter_anisotropic"))
+    {
+        GLfloat anisoSetting = 0.0f;
+        glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &anisoSetting);
+        LOG_INFO("using anisotropy, MAX_ANISOTRPOY_EXT=%.5f", anisoSetting);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisoSetting);
     }
 
     return textureID;

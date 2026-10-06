@@ -1,7 +1,7 @@
 #include "launch.h"
-#include "WindowTexture.h"
+#include "WindowAnisotropy.h"
 
 int main()
 {
-    return run<WindowTexture>(300, 300, "Chapter-5");
+    return run<WindowAnisotropy>(300, 300, "Chapter-5");
 }
