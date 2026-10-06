@@ -1,7 +1,7 @@
 #include "launch.h"
-#include "WindowSolarSystem.h"
+#include "WindowTexturedSolarSystem.h"
 
 int main()
 {
-    return run<WindowSolarSystem>(300, 300, "Chapter-5");
+    return run<WindowTexturedSolarSystem>(300, 300, "Chapter-5");
 }

@@ -40,13 +40,15 @@ private:
 
 // 正四面体
 extern const float VERTICES_TETRAHEDRON_DEF[36];
+extern const float TEXCOORDS_TETRAHEDRON_DEF[24];
 
 // 立方体
 extern const float VERTICES_CUBE_DEF[108];
+extern const float TEXCOORDS_CUBE_DEF[72];
 
 // 四棱锥
 extern const float VERTICES_PYRAMID_DEF[54];
-extern const float TEXTURE_PYRAMID_DEF[36];
+extern const float TEXCOORDS_PYRAMID_DEF[36];
 
 
 #endif //WINDOW_H

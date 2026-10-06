@@ -21,7 +21,7 @@ void WindowAnisotropy::Init()
     glGenBuffers(VBO_NUM, vbo_);
 
     SetupVertexBuffer(VERTICES_PYRAMID_DEF, sizeof(VERTICES_PYRAMID_DEF), VBO_INDEX_VERTEX);
-    SetupVertexBuffer(TEXTURE_PYRAMID_DEF, sizeof(TEXTURE_PYRAMID_DEF), VBO_INDEX_TEXTURE);
+    SetupVertexBuffer(TEXCOORDS_PYRAMID_DEF, sizeof(TEXCOORDS_PYRAMID_DEF), VBO_INDEX_TEXTURE);
 
     // Load texture data from file system
     brickTexture_ = Utils::loadTexture("res/texture/133-pin.jpg");
