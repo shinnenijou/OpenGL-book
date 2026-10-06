@@ -16,9 +16,7 @@ public:
     void Init() override;
     void Display(double current_time) override;
 private:
-    void SetupCubeVertices(size_t index);
-    void SetupPyramidVertices(size_t index);
-    void SetupTetrahedron(size_t index);
+    void SetupVertices(const float points[], int size, int index);
 
 private:
     GLuint vao_[VAO_NUM];

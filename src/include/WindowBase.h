@@ -38,6 +38,14 @@ private:
     void Display();
 };
 
+// 正四面体
+extern const float VERTICES_TETRAHEDRON_DEF[36];
+
+// 立方体
+extern const float VERTICES_CUBE_DEF[108];
+
+// 四棱锥
+extern const float VERTICES_PYRAMID_DEF[54];
 
 
 #endif //WINDOW_H

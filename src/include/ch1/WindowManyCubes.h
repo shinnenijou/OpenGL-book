@@ -12,7 +12,7 @@ public:
     void Init() override;
     void Display(double current_time) override;
 private:
-    void SetupVertices();
+    void SetupVertices(const float points[], int size, int index);
     void DisplayByCppLoop(double current_time, int cubeCount);
     void DisplayByInstancing(double current_time, int cubeCount);
 

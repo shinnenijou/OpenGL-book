@@ -14,8 +14,7 @@ public:
     void Init() override;
     void Display(double current_time) override;
 private:
-    void SetupCubeVertices();
-    void SetupPyramidVertices();
+    void SetupVertices(const float points[], int size, int index);
 
 private:
     GLuint vao_[VAO_NUM];

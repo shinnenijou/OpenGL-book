@@ -1,5 +1,6 @@
 #include "opengl.h"
 #include "Utils.h"
+#include "debug.h"
 #include "WindowManyCubes.h"
 
 
@@ -16,31 +17,6 @@ void WindowManyCubes::Init()
     cube_loc_.y = -2.0f;
     cube_loc_.z = 0.0f;
 
-    SetupVertices();
-}
-
-void WindowManyCubes::Display(const double current_time)
-{
-    DisplayByInstancing(current_time, 100000);
-}
-
-void WindowManyCubes::SetupVertices()
-{
-    constexpr float vertex_positions[] = {
-       -1.0f,  1.0f, -1.0f, -1.0f, -1.0f, -1.0f,  1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,  1.0f,  1.0f, -1.0f, -1.0f,  1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,  1.0f, -1.0f,  1.0f,  1.0f,  1.0f, -1.0f,
-        1.0f, -1.0f,  1.0f,  1.0f,  1.0f,  1.0f,  1.0f,  1.0f, -1.0f,
-        1.0f, -1.0f,  1.0f, -1.0f, -1.0f,  1.0f,  1.0f,  1.0f,  1.0f,
-       -1.0f, -1.0f,  1.0f, -1.0f,  1.0f,  1.0f,  1.0f,  1.0f,  1.0f,
-       -1.0f, -1.0f,  1.0f, -1.0f, -1.0f, -1.0f, -1.0f,  1.0f,  1.0f,
-       -1.0f, -1.0f, -1.0f, -1.0f,  1.0f, -1.0f, -1.0f,  1.0f,  1.0f,
-       -1.0f, -1.0f,  1.0f,  1.0f, -1.0f,  1.0f,  1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f,  1.0f,
-       -1.0f,  1.0f, -1.0f,  1.0f,  1.0f, -1.0f,  1.0f,  1.0f,  1.0f,
-        1.0f,  1.0f,  1.0f, -1.0f,  1.0f,  1.0f, -1.0f,  1.0f, -1.0f,
-    };
-
     // Create and bind vao
     glGenVertexArrays(VAO_NUM, vao_);
     glBindVertexArray(vao_[0]);
@@ -48,9 +24,18 @@ void WindowManyCubes::SetupVertices()
     // Create
     glGenBuffers(VBO_NUM, vbo_);
 
-    // bind vertex postions to the first vbo
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_positions), vertex_positions, GL_STATIC_DRAW);
+    SetupVertices(VERTICES_CUBE_DEF, sizeof(VERTICES_CUBE_DEF), 0);
+}
+
+void WindowManyCubes::Display(const double current_time)
+{
+    DisplayByInstancing(current_time, 100000);
+}
+
+void WindowManyCubes::SetupVertices(const float points[], int size, int index) {
+    CHECK_ARRAY_INDEX_NORET(vbo_, index);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_[index]);
+    glBufferData(GL_ARRAY_BUFFER, size, points, GL_STATIC_DRAW);
 }
 
 // 10K cubes: 24FPS

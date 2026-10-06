@@ -12,7 +12,7 @@ public:
     void Init() override;
     void Display(double current_time) override;
 private:
-    void SetupVertices();
+    void SetupVertices(const float points[], int size, int index);
 private:
     GLuint vao_[VAO_NUM];
     GLuint vbo_[VBO_NUM];

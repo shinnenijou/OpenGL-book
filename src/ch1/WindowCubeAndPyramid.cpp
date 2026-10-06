@@ -20,8 +20,8 @@ void WindowCubeAndPyramid::Init()
     // Create vbo
     glGenBuffers(VBO_NUM, vbo_);
 
-    SetupCubeVertices();
-    SetupPyramidVertices();
+    SetupVertices(VERTICES_CUBE_DEF, sizeof(VERTICES_CUBE_DEF), 0);
+    SetupVertices(VERTICES_PYRAMID_DEF, sizeof(VERTICES_PYRAMID_DEF), 1);
 }
 
 void WindowCubeAndPyramid::Display(const double current_time)
@@ -69,39 +69,10 @@ void WindowCubeAndPyramid::Display(const double current_time)
     glDrawArrays(GL_TRIANGLES, 0, 18);
 }
 
-void WindowCubeAndPyramid::SetupCubeVertices()
-{
-    constexpr float vertex_positions[] = {
-       -1.0f,  1.0f, -1.0f, -1.0f, -1.0f, -1.0f,  1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,  1.0f,  1.0f, -1.0f, -1.0f,  1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,  1.0f, -1.0f,  1.0f,  1.0f,  1.0f, -1.0f,
-        1.0f, -1.0f,  1.0f,  1.0f,  1.0f,  1.0f,  1.0f,  1.0f, -1.0f,
-        1.0f, -1.0f,  1.0f, -1.0f, -1.0f,  1.0f,  1.0f,  1.0f,  1.0f,
-       -1.0f, -1.0f,  1.0f, -1.0f,  1.0f,  1.0f,  1.0f,  1.0f,  1.0f,
-       -1.0f, -1.0f,  1.0f, -1.0f, -1.0f, -1.0f, -1.0f,  1.0f,  1.0f,
-       -1.0f, -1.0f, -1.0f, -1.0f,  1.0f, -1.0f, -1.0f,  1.0f,  1.0f,
-       -1.0f, -1.0f,  1.0f,  1.0f, -1.0f,  1.0f,  1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f,  1.0f,
-       -1.0f,  1.0f, -1.0f,  1.0f,  1.0f, -1.0f,  1.0f,  1.0f,  1.0f,
-        1.0f,  1.0f,  1.0f, -1.0f,  1.0f,  1.0f, -1.0f,  1.0f, -1.0f,
-    };
-
-    // bind vertex postions to the first vbo
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_[VBO_INDEX_CUBE]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_positions), vertex_positions, GL_STATIC_DRAW);
+void WindowCubeAndPyramid::SetupVertices(const float points[], int size, int index) {
+    CHECK_ARRAY_INDEX_NORET(vbo_, index);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_[index]);
+    glBufferData(GL_ARRAY_BUFFER, size, points, GL_STATIC_DRAW);
 }
 
-void WindowCubeAndPyramid::SetupPyramidVertices() {
-    constexpr float vertex_positions[] = {
-        -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f, // 前面
-        1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // 右面
-        1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // 后面
-        -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f, // 左面
-        -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, // 底面左前
-        1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f // 底面右后
-    };
 
-    // bind vertex postions to the second vbo
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_[VBO_INDEX_PYRAMID]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_positions), vertex_positions, GL_STATIC_DRAW);
-}
