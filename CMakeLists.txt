@@ -37,14 +37,14 @@ INCLUDE_DIRECTORIES(third-party/SOIL2/src/SOIL2)
 # Include
 # #########################################################
 INCLUDE_DIRECTORIES(src/include)
-INCLUDE_DIRECTORIES(src/include/ch1)
-
+INCLUDE_DIRECTORIES(src/include/ch4)
+INCLUDE_DIRECTORIES(src/include/ch4)
 
 # #########################################################
 # Source
 # #########################################################
 AUX_SOURCE_DIRECTORY(src SRC_LIST)
-AUX_SOURCE_DIRECTORY(src/ch1 SRC_LIST)
+AUX_SOURCE_DIRECTORY(src/ch4 SRC_LIST)
 
 
 # #########################################################
