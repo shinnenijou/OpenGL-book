@@ -3,5 +3,5 @@
 
 int main()
 {
-    return run<WindowOneModel>(300, 300, "Chapter-5");
+    return run<WindowOneModel>(800, 800, "Chapter-6");
 }

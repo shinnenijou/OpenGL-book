@@ -24,9 +24,8 @@ void WindowOneModel::Init()
 
     // Create a sphere model
     // 实际上是可以把顶点数组数据整个传入同一个VBO, 在为着色器启用顶点属性时指定不同偏移, 着色器就会将不同字段的数据解释为不同的顶点属性
-    sphere_ = Sphere{100};
     glBindBuffer(GL_ARRAY_BUFFER, vbo_[0]);
-    glBufferData(GL_ARRAY_BUFFER, sphere_.getVertexNum() * sizeof(Sphere::Vertex), sphere_.getVertices().data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, model_.getVertexNum() * sizeof(Sphere::Vertex), model_.getVertices().data(), GL_STATIC_DRAW);
 
     // load texture
     textureID_ = Utils::loadTexture("res/texture/133-pin.jpg");
@@ -49,13 +48,9 @@ void WindowOneModel::Display(const double current_time)
     auto pMat = glm::perspective(FOVY, aspect, 0.1f, 1000.0f);
 
     // create mv matrix
-    const auto vMat = translate(glm::mat4(1.0f), - camara_);
-    const auto tMat = translate(glm::mat4(1.0f), glm::vec3(sin(0.35f * current_time) * 2.0f, cos(0.52f * current_time) * 2.0f, sin(0.7f * current_time) * 2.0f));
-    auto rMat = rotate(glm::mat4(1.0f), 1.75f * static_cast<float>(current_time), glm::vec3(0.0f, 1.0f, 0.0f));
-    rMat = rotate(rMat, 1.75f * static_cast<float>(current_time), glm::vec3(1.0f, 0.0f, 0.0f));
-    rMat = rotate(rMat, 1.75f * static_cast<float>(current_time), glm::vec3(0.0f, 0.0f, 1.0f));
-    const auto mMat = tMat * rMat;
-    auto mvMat = vMat * mMat;
+    auto mvMat = translate(glm::mat4(1.0f), - camara_);
+    mvMat *= glm::rotate(glm::mat4(1.0f), Utils::toRadian(90), {0, 1, 1});
+    mvMat *= glm::scale(glm::mat4(1.0f), {4, 4, 4});
 
     // copy perspective matrix and mv matrix
     glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
@@ -78,7 +73,8 @@ void WindowOneModel::Display(const double current_time)
     glBindTexture(GL_TEXTURE_2D, textureID_);
 
     // setup opengl configure
+    glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
-    glDrawArrays(GL_TRIANGLES, 0, sphere_.getVertexNum());
+    glDrawArrays(GL_TRIANGLES, 0, model_.getVertexNum());
 }
