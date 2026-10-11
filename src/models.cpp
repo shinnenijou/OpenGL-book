@@ -7,11 +7,7 @@
 
 using namespace std;
 
-Sphere::Sphere(int prec) {
-    init(prec);
-}
-
-std::vector<Sphere::Vertex> Sphere::getVertices() const {
+std::vector<ModelBase::Vertex> ModelBase::getVertices() const {
     vector<Vertex> serializedVertices {};
     serializedVertices.resize(indices.size());
     for (size_t i = 0; i < indices.size(); ++i) {
@@ -20,7 +16,7 @@ std::vector<Sphere::Vertex> Sphere::getVertices() const {
     return serializedVertices;
 }
 
-std::vector<glm::vec3> Sphere::getPositions() const {
+std::vector<glm::vec3> ModelBase::getPositions() const {
     vector<glm::vec3> serializedPositions {};
     serializedPositions.resize(indices.size());
     for (size_t i = 0; i < indices.size(); ++i) {
@@ -29,7 +25,7 @@ std::vector<glm::vec3> Sphere::getPositions() const {
     return serializedPositions;
 }
 
-std::vector<glm::vec2> Sphere::getTexCoords() const {
+std::vector<glm::vec2> ModelBase::getTexCoords() const {
     vector<glm::vec2> serializedTexCoords {};
     serializedTexCoords.resize(indices.size());
     for (size_t i = 0; i < indices.size(); ++i) {
@@ -38,7 +34,7 @@ std::vector<glm::vec2> Sphere::getTexCoords() const {
     return serializedTexCoords;
 }
 
-std::vector<glm::vec3> Sphere::getNormals() const {
+std::vector<glm::vec3> ModelBase::getNormals() const {
     vector<glm::vec3> serializedNormals {};
     serializedNormals.resize(indices.size());
     for (size_t i = 0; i < indices.size(); ++i) {
@@ -47,8 +43,20 @@ std::vector<glm::vec3> Sphere::getNormals() const {
     return serializedNormals;
 }
 
-int Sphere::getVertexNum() const {
+int ModelBase::getVertexNum() const {
     return indices.size();
+}
+
+const std::vector<ModelBase::Vertex> & ModelBase::getRawVertices() const {
+    return vertices;
+}
+
+const std::vector<int> & ModelBase::getRawIndices() const {
+    return indices;
+}
+
+Sphere::Sphere(int prec) {
+    init(prec);
 }
 
 void Sphere::init(int prec) {
@@ -95,54 +103,6 @@ void Sphere::init(int prec) {
 
 Torus::Torus(float inner, float outer, int prec) {
     init(inner, outer, prec);
-}
-
-std::vector<Torus::Vertex> Torus::getVertices() const {
-    vector<Vertex> serializedVertices {};
-    serializedVertices.resize(indices.size());
-    for (size_t i = 0; i < indices.size(); ++i) {
-        serializedVertices[i] = vertices[indices[i]];
-    }
-    return serializedVertices;
-}
-
-std::vector<glm::vec3> Torus::getPositions() const {
-    vector<glm::vec3> serializedPositions {};
-    serializedPositions.resize(indices.size());
-    for (size_t i = 0; i < indices.size(); ++i) {
-        serializedPositions[i] = vertices[indices[i]].position;
-    }
-    return serializedPositions;
-}
-
-std::vector<glm::vec2> Torus::getTexCoords() const {
-    vector<glm::vec2> serializedTexCoords {};
-    serializedTexCoords.resize(indices.size());
-    for (size_t i = 0; i < indices.size(); ++i) {
-        serializedTexCoords[i] = vertices[indices[i]].texCoord;
-    }
-    return serializedTexCoords;
-}
-
-std::vector<glm::vec3> Torus::getNormals() const {
-    vector<glm::vec3> serializedNormals {};
-    serializedNormals.resize(indices.size());
-    for (size_t i = 0; i < indices.size(); ++i) {
-        serializedNormals[i] = vertices[indices[i]].normal;
-    }
-    return serializedNormals;
-}
-
-int Torus::getVertexNum() const {
-    return indices.size();
-}
-
-const std::vector<Torus::Vertex> & Torus::getRawVertices() const {
-    return vertices;
-}
-
-const std::vector<int> & Torus::getRawIndices() const {
-    return indices;
 }
 
 void Torus::init(float inner, float outer, int prec) {
