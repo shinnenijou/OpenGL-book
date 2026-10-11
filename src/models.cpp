@@ -4,6 +4,10 @@
 
 #include <cmath>
 #include <vector>
+#include <fstream>
+#include <sstream>
+#include <exception>
+#include <map>
 
 using namespace std;
 
@@ -55,7 +59,7 @@ const std::vector<int> & ModelBase::getRawIndices() const {
     return indices;
 }
 
-Sphere::Sphere(int prec) {
+Sphere::Sphere(int prec){
     init(prec);
 }
 
@@ -155,8 +159,6 @@ void Torus::init(float inner, float outer, int prec) {
                 .texCoord = {vertex.texCoord.x, tc},
                 .normal = {n.x, n.y, n.z},
             };
-
-            LOG_INFO("tex coords: x = %.5f, y = %.5f", vertex.texCoord.x, tc);
         }
     }
 
@@ -177,6 +179,148 @@ void Torus::init(float inner, float outer, int prec) {
             indices[6 * (i * prec + j) + 4] = (i + 1) % prec * prec + j;
             indices[6 * (i * prec + j) + 5] = i * prec + j;
         }
+    }
+}
+
+void ObjModel::init(const Utils::path &path) {
+    fstream fs(Utils::GetAbsPath(path));
+
+    if (!fs.is_open()) {
+        LOG_ERROR("Failed to open file: %s", path.c_str());
+        return;
+    }
+
+    string token;
+    char line[1024];
+
+    vector<glm::vec3> v {};
+    vector<glm::vec2> vt {};
+    vector<glm::vec3> vn {};
+    map<string, int> vMap {};
+
+
+    // 先构建顶点数据
+    while (fs.getline(line, sizeof(line))) {
+        stringstream ss {line};
+
+        if (!(ss >> token)) {
+            continue;
+        }
+
+        // vertex
+        if (token == "v") {
+            glm::vec3 pos{};
+            ss >> pos.x;
+            ss >> pos.y;
+            ss >> pos.z;
+            v.emplace_back(pos);
+        }
+
+        // normal
+        if (token == "vn") {
+            glm::vec3 pos{};
+            ss >> pos.x;
+            ss >> pos.y;
+            ss >> pos.z;
+            vn.emplace_back(pos);
+        }
+
+        // texture
+        if (token == "vt") {
+            glm::vec2 pos{};
+            ss >> pos.x;
+            ss >> pos.y;
+            vt.emplace_back(pos);
+        }
+
+        // face
+        if (token == "f") {
+            while (ss >> token) {
+                if (vMap.find(token) == vMap.end()) {
+                    vMap[token] = vMap.size();
+                }
+            }
+        }
+    }
+
+    vertices.clear();
+    vertices.resize(vMap.size());
+    for (auto it = vMap.begin(); it != vMap.end(); ++it) {
+        string s = it->first;
+        for (size_t i = 0; i < s.size(); ++i) {
+            if (s[i] == '/') {
+                s[i] = ' ';
+            }
+        }
+        stringstream ss{s};
+        size_t vi {}, vti {}, vni {};
+        ss >> vi;
+        ss >> vti;
+        ss >> vni;
+        vertices[it->second] = Vertex{
+            .position = v[vi - 1],
+            .texCoord = vt[vti - 1],
+            .normal = vn[vni - 1],
+        };
+    }
+
+    // 构建索引数据
+    fs.clear();
+    fs.seekg(0);
+    indices.clear();
+    while (fs.getline(line, sizeof(line))) {
+        stringstream ss {line};
+
+        if (!(ss >> token)) {
+            continue;
+        }
+
+        // face
+        if (token != "f") {
+            continue;
+        }
+
+        // first vertex
+        int v1 = -1, v2 = -1, v3 = -1;
+        if (ss >> token && vMap.find(token) != vMap.end()) {
+            v1 = vMap[token];
+        }
+
+        // second vertex
+        if (ss >> token && vMap.find(token) != vMap.end()) {
+            v2 = vMap[token];
+        }
+
+        while (true) {
+            if (!(ss >> token)) {
+                break;
+            }
+
+            if (vMap.find(token) == vMap.end()) {
+                break;
+            }
+
+            v3 = vMap[token];
+
+            // 构成一个三角形
+            if (v1 >= 0 && v2 >= 0 && v3 >= 0) {
+                indices.push_back(v1);
+                indices.push_back(v2);
+                indices.push_back(v3);
+                v2 = v3;
+                v3 = -1;
+            }
+        }
+    }
+}
+
+ObjModel::ObjModel(const Utils::path &path) {
+    try {
+        init(path);
+    } catch(const std::exception& e) {
+        vertices.clear();
+        indices.clear();
+        LOG_ERROR("load obj model error: %s", e.what());
     }
 }
 

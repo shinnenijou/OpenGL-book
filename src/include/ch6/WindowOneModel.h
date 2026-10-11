@@ -20,7 +20,7 @@ private:
     GLuint rendering_program_;
     glm::vec3 camara_ {};
     glm::vec3 init_loc_ {};
-    Torus model_ {0.5, 0.2, 40};
+    ObjModel model_ {"res/model/duck.obj"};
     GLuint textureID_ {};
 };
 

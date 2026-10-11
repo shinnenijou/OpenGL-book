@@ -2,6 +2,7 @@
 #define MODELS_H
 
 #include "opengl.h"
+#include "Utils.h"
 
 #include <vector>
 
@@ -28,7 +29,6 @@ protected:
 };
 
 class Sphere : public ModelBase{
-
 public:
     explicit Sphere(int prec = 48);
 private:
@@ -36,11 +36,18 @@ private:
 };
 
 class Torus : public ModelBase {
-
 public:
     explicit Torus(float inner = 0.5f, float outer = 0.2f, int prec = 20);
 private:
     void init(float inner, float outer, int prec);
 };
+
+class ObjModel: public ModelBase {
+public:
+    explicit ObjModel(const Utils::path& path);
+private:
+    void init(const Utils::path& path);
+};
+
 
 #endif //MODELS_H

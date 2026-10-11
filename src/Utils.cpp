@@ -19,6 +19,11 @@ auto Utils::GetRootPath() -> const path & {
     return base;
 }
 
+auto Utils::GetAbsPath(const path &relativePath) -> path {
+    return GetRootPath() / relativePath;
+}
+
+
 auto Utils::ReadShaderSource(const path& relativePath) -> string
 {
     static path base = GetRootPath();

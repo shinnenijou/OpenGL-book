@@ -28,7 +28,7 @@ void WindowOneModel::Init()
     glBufferData(GL_ARRAY_BUFFER, model_.getVertexNum() * sizeof(Sphere::Vertex), model_.getVertices().data(), GL_STATIC_DRAW);
 
     // load texture
-    textureID_ = Utils::loadTexture("res/texture/133-pin.jpg");
+    textureID_ = Utils::loadTexture("res/texture/duck.jpg");
 }
 
 void WindowOneModel::Display(const double current_time)
@@ -49,8 +49,9 @@ void WindowOneModel::Display(const double current_time)
 
     // create mv matrix
     auto mvMat = translate(glm::mat4(1.0f), - camara_);
-    mvMat *= glm::rotate(glm::mat4(1.0f), Utils::toRadian(90), {0, 1, 1});
-    mvMat *= glm::scale(glm::mat4(1.0f), {4, 4, 4});
+    mvMat *= glm::rotate(glm::mat4(1.0f), Utils::toRadian(90), {1, 0, 0});
+    mvMat *= glm::rotate(glm::mat4(1.0f), static_cast<float>(current_time) / 5, {0, 0, 1});
+    mvMat *= glm::scale(glm::mat4(1.0f), {8, 8, 8});
 
     // copy perspective matrix and mv matrix
     glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
