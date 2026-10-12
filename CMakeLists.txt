@@ -40,6 +40,8 @@ INCLUDE_DIRECTORIES(src/include)
 INCLUDE_DIRECTORIES(src/include/ch4)
 INCLUDE_DIRECTORIES(src/include/ch5)
 INCLUDE_DIRECTORIES(src/include/ch6)
+INCLUDE_DIRECTORIES(src/include/ch7)
+
 
 # #########################################################
 # Source
@@ -48,6 +50,7 @@ AUX_SOURCE_DIRECTORY(src SRC_LIST)
 AUX_SOURCE_DIRECTORY(src/ch4 SRC_LIST)
 AUX_SOURCE_DIRECTORY(src/ch5 SRC_LIST)
 AUX_SOURCE_DIRECTORY(src/ch6 SRC_LIST)
+AUX_SOURCE_DIRECTORY(src/ch7 SRC_LIST)
 
 
 # #########################################################

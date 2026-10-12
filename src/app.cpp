@@ -1,7 +1,7 @@
 #include "launch.h"
-#include "WindowOneModel.h"
+#include "WindowLightOnModel.h"
 
 int main()
 {
-    return run<WindowOneModel>(800, 800, "Chapter-6");
+    return run<WindowLightOnModel>(800, 800, "Chapter-6");
 }
