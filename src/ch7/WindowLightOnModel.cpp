@@ -43,6 +43,11 @@ void WindowLightOnModel::Init()
     glBufferData(GL_ARRAY_BUFFER, model_.getRawVertices().size() * sizeof(Sphere::Vertex), model_.getRawVertices().data(), GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, vbo_[1]);
     glBufferData(GL_ARRAY_BUFFER, model_.getRawIndices().size() * sizeof(Sphere::Vertex), model_.getRawIndices().data(), GL_STATIC_DRAW);
+
+    double mousePosX = 0;
+    double mousePosY = 0;
+    glfwGetCursorPos(window_, &mousePosX, &mousePosY);
+    mouse_pos_ = {mousePosX, mousePosY, 0};
 }
 
 void WindowLightOnModel::Display(const double current_time)
@@ -63,8 +68,14 @@ void WindowLightOnModel::Display(const double current_time)
     mMat *= glm::rotate(glm::mat4(1.0f), static_cast<float>(current_time) / 5, {0, 0, 1});
     mMat *= glm::scale(glm::mat4(1.0f), {4, 4, 4});
 
+    // 计算当前帧鼠标位置变化量
+    double mousePosX = 0;
+    double mousePosY = 0;
+    glfwGetCursorPos(window_, &mousePosX, &mousePosY);
+    glm::vec3 lightPosOffset = glm::vec3{mousePosX, mousePosY, 0} - mouse_pos_;
+
     // init lighting based on current light position
-    InstallLight(vMat);
+    InstallLight(vMat, lightPosOffset);
 
     // create inverse transpose of mv matrix to transform normal vector
     auto mvMat = vMat * mMat;
@@ -99,9 +110,9 @@ void WindowLightOnModel::Display(const double current_time)
     glDrawElements(GL_TRIANGLES, model_.getRawIndices().size(), GL_UNSIGNED_INT, 0);
 }
 
-void WindowLightOnModel::InstallLight(const glm::mat4 &vMat) {
+void WindowLightOnModel::InstallLight(const glm::mat4 &vMat, const glm::vec3& offset) {
     // 将光源位置转换为视图空间坐标, 并存入浮点数组
-    auto lightPos = glm::vec3(vMat * glm::vec4(light_.position, 1.0f));
+    auto lightPos = glm::vec3(vMat * glm::vec4(light_.position, 1.0f)) + offset;
 
     GLint loc {};
 

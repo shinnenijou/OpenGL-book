@@ -15,7 +15,7 @@ public:
     void Display(double current_time) override;
 private:
     void SetupVertices(const float points[], int size, int index);
-    void InstallLight(const glm::mat4& vMat);
+    void InstallLight(const glm::mat4& vMat, const glm::vec3& offset);
 private:
     GLuint vao_[VAO_NUM];
     GLuint vbo_[VBO_NUM];
@@ -26,6 +26,7 @@ private:
     PosLight light_ {};
     AmbientLight globalAmbient_ {};
     Material mat_ {MatGold};
+    glm::vec3 mouse_pos_ {};
 };
 
 #endif //WINDOWLIGHTONMODEL_H
