@@ -24,6 +24,7 @@ private:
     glm::vec3 init_loc_ {};
     Torus model_ {};
     PosLight light_ {};
+    PosLight light2_ {};
     AmbientLight globalAmbient_ {};
     Material mat_ {MatGold};
     glm::vec3 mouse_pos_ {};

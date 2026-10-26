@@ -28,6 +28,16 @@ void WindowLightOnModel::Init()
         {}
     };
 
+    light2_ = {
+        {
+            {0,0,0,1},
+            {1,1,1,1},
+            {1,1,1,1},
+        },
+        {-5.0f, -2.0f, 2.0f},
+        {}
+    };
+
     model_ = Torus(0.5, 0.2, 20);
 
     // Create and bind vao
@@ -71,8 +81,8 @@ void WindowLightOnModel::Display(const double current_time)
     // 计算当前帧鼠标位置变化量
     double mousePosX = 0;
     double mousePosY = 0;
-    glfwGetCursorPos(window_, &mousePosX, &mousePosY);
-    glm::vec3 lightPosOffset = glm::vec3{mousePosX, mousePosY, 0} - mouse_pos_;
+    // glfwGetCursorPos(window_, &mousePosX, &mousePosY);
+    glm::vec3 lightPosOffset = glm::vec3{mousePosX, mousePosY, 0};
 
     // init lighting based on current light position
     InstallLight(vMat, lightPosOffset);
@@ -113,6 +123,7 @@ void WindowLightOnModel::Display(const double current_time)
 void WindowLightOnModel::InstallLight(const glm::mat4 &vMat, const glm::vec3& offset) {
     // 将光源位置转换为视图空间坐标, 并存入浮点数组
     auto lightPos = glm::vec3(vMat * glm::vec4(light_.position, 1.0f)) + offset;
+    auto light2Pos = glm::vec3(vMat * glm::vec4(light2_.position, 1.0f)) + offset;
 
     GLint loc {};
 
@@ -129,6 +140,16 @@ void WindowLightOnModel::InstallLight(const glm::mat4 &vMat, const glm::vec3& of
     glProgramUniform4fv(rendering_program_, loc, 1, glm::value_ptr(light_.specular));
     loc = glGetUniformLocation(rendering_program_, "light.position");
     glProgramUniform3fv(rendering_program_, loc, 1, glm::value_ptr(lightPos));
+
+    // 位置光2的各个分量
+    loc = glGetUniformLocation(rendering_program_, "light2.ambient");
+    glProgramUniform4fv(rendering_program_, loc, 1, glm::value_ptr(light2_.ambient));
+    loc = glGetUniformLocation(rendering_program_, "light2.diffuse");
+    glProgramUniform4fv(rendering_program_, loc, 1, glm::value_ptr(light2_.diffuse));
+    loc = glGetUniformLocation(rendering_program_, "light2.specular");
+    glProgramUniform4fv(rendering_program_, loc, 1, glm::value_ptr(light2_.specular));
+    loc = glGetUniformLocation(rendering_program_, "light2.position");
+    glProgramUniform3fv(rendering_program_, loc, 1, glm::value_ptr(light2Pos));
 
     // 材质的各个分量
     loc = glGetUniformLocation(rendering_program_, "material.ambient");
