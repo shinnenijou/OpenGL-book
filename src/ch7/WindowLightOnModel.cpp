@@ -11,7 +11,7 @@ using namespace std;
 void WindowLightOnModel::Init()
 {
     WindowBase::Init();
-    rendering_program_ = Utils::CreateShaderProgram("res/shader/vertShader-7.5.glsl", "res/shader/fragShader-7.5.glsl");
+    rendering_program_ = Utils::CreateShaderProgram("res/shader/vertShader-7.5.2.glsl", "res/shader/fragShader-7.5.2.glsl");
 
     camara_ = {0.0f, 0.0f, 8.0f};
     init_loc_ = {0.0f, 0.0f, 0.0f};
@@ -28,7 +28,7 @@ void WindowLightOnModel::Init()
         {}
     };
 
-    model_ = Torus(0.5, 0.2, 100);
+    model_ = Torus(0.5, 0.2, 20);
 
     // Create and bind vao
     glGenVertexArrays(VAO_NUM, vao_);
